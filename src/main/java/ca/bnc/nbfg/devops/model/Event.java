@@ -1,13 +1,21 @@
 package ca.bnc.nbfg.devops.model;
 
+
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Getter
+@Setter
 public class Event {
 
     @Id
@@ -17,6 +25,17 @@ public class Event {
     private LocalDateTime endDate;
     private String title;
     private String description;
+    @ManyToMany
+    private List<Person> listPerson;
+
+    public List<Person> getListPerson() {
+        return listPerson;
+    }
+
+    public void setListPerson(List<Person> listPerson) {
+        this.listPerson = listPerson;
+    }
+
 
     public Long getId() {
         return id;
