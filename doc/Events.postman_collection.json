@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "21fdb5f7-23a9-4e8e-8904-d4560d87de71",
+		"_postman_id": "12a6c80c-6987-4077-ac14-f94a10d2484d",
 		"name": "Events",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -29,6 +29,37 @@
 					"port": "9091",
 					"path": [
 						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cancel event",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"startDate\": \"2019-06-03T12:02:00\",\n    \"endDate\": \"2019-06-03T14:02:00\",\n    \"title\": \"Second event\",\n    \"description\": \"it's a good second event\"\n}"
+				},
+				"url": {
+					"raw": "localhost:9091/events/1/cancel",
+					"host": [
+						"localhost"
+					],
+					"port": "9091",
+					"path": [
+						"events",
+						"1",
+						"cancel"
 					]
 				}
 			},

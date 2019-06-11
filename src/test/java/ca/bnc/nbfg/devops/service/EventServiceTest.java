@@ -2,6 +2,7 @@ package ca.bnc.nbfg.devops.service;
 
 import ca.bnc.nbfg.devops.model.Event;
 import ca.bnc.nbfg.devops.repository.EventRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 public class EventServiceTest {
@@ -97,6 +99,21 @@ public class EventServiceTest {
                 .contains(new Long(2222L), new Long(3333L),new Long(1111L));
         Mockito.verify(eventRepositoryMock).findAll();
         Mockito.verifyNoMoreInteractions(eventRepositoryMock);
+    }
+
+    @Test
+    public void cancelEvent_Success() {
+        //setup
+        Event event1 = new Event();
+        event1.setId(4242L);
+        event1.setDescription("description");
+        event1.setCanceled(false);
+
+        Mockito.when(eventRepositoryMock.findById(event1.getId())).thenReturn(Optional.of(event1));
+
+        eventService.cancelEvent( event1.getId() );
+
+        Assertions.assertThat( event1.isCanceled() ).isTrue();
     }
 
 }

@@ -17,6 +17,7 @@ public class Event {
     private LocalDateTime endDate;
     private String title;
     private String description;
+    private boolean canceled;
 
     public Long getId() {
         return id;
@@ -58,4 +59,11 @@ public class Event {
         this.description = description;
     }
 
+    public boolean isCanceled() {
+        return this.canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
+    }
 }
