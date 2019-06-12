@@ -1,11 +1,11 @@
 package ca.bnc.nbfg.devops.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Event {
@@ -17,7 +17,22 @@ public class Event {
     private LocalDateTime endDate;
     private String title;
     private String description;
+<<<<<<< HEAD
     private boolean canceled;
+=======
+>>>>>>> 0c1286d2b0ca6fa8f0d3cf8cb78cc100e7e2d8c0
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Guest> guests = new ArrayList<>();
+
+    public List<Guest> getGuests() {
+        return guests;
+    }
+
+    public void setGuests(List<Guest> guests) {
+        this.guests = guests;
+    }
+
+
 
     public Long getId() {
         return id;

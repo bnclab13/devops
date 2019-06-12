@@ -1,8 +1,11 @@
 package ca.bnc.nbfg.devops.controller;
 
 import ca.bnc.nbfg.devops.model.Event;
+import ca.bnc.nbfg.devops.model.Guest;
 import ca.bnc.nbfg.devops.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
@@ -27,5 +30,17 @@ public class EventController {
     @PutMapping("/events/{id}/cancel")
     public void cancelEvent(@PathVariable Long id){
         eventService.cancelEvent(id);
+    }
+
+    @PostMapping("/events/{id}/guests")
+    public ResponseEntity<String> inviteGuestToEvent(@PathVariable Long id, @RequestBody List<Guest> guests){
+        eventService.inviteGuests(id,guests);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/events/{id}/guests")
+    public ResponseEntity<String> inviteGuestToEvent(@PathVariable Long id, @RequestBody List<Guest> guests){
+        eventService.inviteGuests(id,guests);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
