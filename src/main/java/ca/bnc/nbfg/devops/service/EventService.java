@@ -1,6 +1,7 @@
 package ca.bnc.nbfg.devops.service;
 
 import ca.bnc.nbfg.devops.model.Event;
+import ca.bnc.nbfg.devops.model.Guest;
 import ca.bnc.nbfg.devops.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,17 @@ public class EventService {
         }
     }
 
-    public List<Event> getEventsByGuest(@Param("email") String email){
-       return eventRepository.getEventsByGuest(email);
+    public List<Event> getEventsByGuest(@Param("email") String email) {
+        return eventRepository.getEventsByGuest(email);
+    }
+    public void inviteGuests(Long eventId, List<Guest> guests){
+        Optional<Event> eventOptional = eventRepository.findById(eventId);
+        if (eventOptional.isPresent()){
+            Event event = eventOptional.get();
+            //add all the guests to the list
+            event.getGuests().addAll(guests);
+            eventRepository.save(event);
+        }
+
     }
 }

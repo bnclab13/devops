@@ -16,7 +16,7 @@ public class GuestController {
     @Autowired
     EventService eventService;
 
-    @GetMapping("/guest/{email}/events")
+    @GetMapping("/guests/{email}/events")
     public List<Event> getEventsByGuest(@PathVariable String email) {
     return eventService.getEventsByGuest(email);
     }

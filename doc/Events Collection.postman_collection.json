@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "cfa98513-cc37-4113-a516-a045ebf46349",
+		"name": "Events develop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "post event",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"startDate\": \"2019-06-03T12:02:00\",\n    \"endDate\": \"2019-06-03T14:02:00\",\n    \"title\": \"Second event\",\n    \"description\": \"it's a good second event\"\n}"
+				},
+				"url": {
+					"raw": "localhost:9091/events",
+					"host": [
+						"localhost"
+					],
+					"port": "9091",
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post invite guests",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n{\n \"id\" : 1,\n \"lastName\" : \"guestLastName\",\n \"firstName\" : \"guestFirstName\",\n \"email\" : \"test@test.com\"\n}\n]"
+				},
+				"url": {
+					"raw": "localhost:9091/events/1/guests",
+					"host": [
+						"localhost"
+					],
+					"port": "9091",
+					"path": [
+						"events",
+						"1",
+						"guests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cancel event",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"startDate\": \"2019-06-03T12:02:00\",\n    \"endDate\": \"2019-06-03T14:02:00\",\n    \"title\": \"Second event\",\n    \"description\": \"it's a good second event\"\n}"
+				},
+				"url": {
+					"raw": "localhost:9091/events/1/cancel",
+					"host": [
+						"localhost"
+					],
+					"port": "9091",
+					"path": [
+						"events",
+						"1",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get events",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9091/events",
+					"host": [
+						"localhost"
+					],
+					"port": "9091",
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

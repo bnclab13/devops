@@ -14,6 +14,6 @@ import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event,Long>{
 
-    @Query("SELECT e FROM Event e where e.email = email")
+    @Query("SELECT e FROM Event e where e.guests.email = email")
     public List<Event> getEventsByGuest(@Param("email") String email);
 }
