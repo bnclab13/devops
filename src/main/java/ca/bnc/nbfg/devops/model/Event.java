@@ -19,7 +19,7 @@ public class Event {
     private String description;
     private boolean canceled;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Guest> guests = new ArrayList<>();
 
     public List<Guest> getGuests() {
