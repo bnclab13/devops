@@ -20,7 +20,7 @@
 
             stage('Publish to SonarQube') {
                 steps {
-                    sh "source code quality check"
+                    sh "echo source code quality check"
                 }
             }
 
