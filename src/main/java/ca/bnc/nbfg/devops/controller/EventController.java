@@ -37,4 +37,9 @@ public class EventController {
         eventService.inviteGuests(id,guests);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/events/{id}")
+    public void deleteEvent(@PathVariable Long id) {
+        eventService.deleteEvent(id);
+    }
 }

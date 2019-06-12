@@ -137,4 +137,51 @@ public class EventServiceTest {
         Mockito.verifyNoMoreInteractions(eventRepositoryMock);
     }
 
+    @Test
+    public void deleteCanceledEventCanceled_Success() {
+        //setup
+        Event event = new Event();
+        event.setId(4242L);
+        event.setDescription("description");
+        event.setCanceled(true);
+
+        Mockito.when(eventRepositoryMock.findById(event.getId())).thenReturn(Optional.of(event));
+
+        eventService.deleteEvent( event.getId() );
+
+        Assertions.assertThat( event.isCanceled() ).isTrue();
+        Mockito.verify(eventRepositoryMock).findById(4242L);
+        Mockito.verify(eventRepositoryMock).delete(event);
+        Mockito.verifyNoMoreInteractions(eventRepositoryMock);
+    }
+
+    @Test
+    public void deleteCanceledEventNotCanceled_Success() {
+        //setup
+        Event event = new Event();
+        event.setId(4242L);
+        event.setDescription("description");
+        event.setCanceled(false);
+
+        Mockito.when(eventRepositoryMock.findById(event.getId())).thenReturn(Optional.of(event));
+
+        eventService.deleteEvent( event.getId() );
+
+        Assertions.assertThat( event.isCanceled() ).isFalse();
+        Mockito.verify(eventRepositoryMock).findById(4242L);
+        Mockito.verifyNoMoreInteractions(eventRepositoryMock);
+    }
+
+    @Test
+    public void deleteCanceledEventNotFound_Success() {
+        //setup
+        final Long ID = Long.valueOf(4242);
+        Mockito.when(eventRepositoryMock.findById(ID)).thenReturn(Optional.ofNullable(null));
+
+        eventService.deleteEvent( ID);
+
+        Mockito.verify(eventRepositoryMock).findById(ID);
+        Mockito.verifyNoMoreInteractions(eventRepositoryMock);
+    }
+
 }
