@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,5 +27,13 @@ public class EventService {
 
     public List<Event> getSortedEvents() {
         return getAllEvents().stream().sorted(Comparator.comparing(Event::getStartDate)).collect(Collectors.toList());
+    }
+
+    public void cancelEvent(Long id) {
+        Optional<Event> event = eventRepository.findById(id);
+        if (event.isPresent()){
+            event.get().setCanceled(true);
+            eventRepository.save(event.get());
+        }
     }
 }
