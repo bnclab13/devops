@@ -46,4 +46,14 @@ public class EventService {
             eventRepository.save(event);
         }
     }
+
+    public void deleteEvent(Long id) {
+        Optional<Event> eventOptional = eventRepository.findById(id);
+        if (eventOptional.isPresent()){
+            Event event = eventOptional.get();
+            if  (event.isCanceled()) {
+                eventRepository.delete(event);
+            }
+        }
+    }
 }
