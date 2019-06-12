@@ -1,8 +1,12 @@
 package ca.bnc.nbfg.devops.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.List;
 
 @Entity
 public class Guest {
@@ -13,8 +17,17 @@ public class Guest {
     private String lastName;
     private String firstName;
     private String email;
+    @ManyToMany(mappedBy = "guests")
+    @JsonIgnore
+    private List<Event> events;
 
-    private 
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
 
     public Long getId() {
         return id;

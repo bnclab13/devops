@@ -40,9 +40,7 @@ public class EventService {
         }
     }
 
-    public List<Event> getEventsByGuest(@Param("email") String email) {
-        return eventRepository.getEventsByGuest(email);
-    }
+
     public void inviteGuests(Long eventId, List<Guest> guests){
         Optional<Event> eventOptional = eventRepository.findById(eventId);
         if (eventOptional.isPresent()){
