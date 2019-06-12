@@ -35,6 +35,36 @@
 			"response": []
 		},
 		{
+			"name": "update event",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"startDate\": \"2019-06-03T12:02:00\",\n    \"endDate\": \"2019-06-03T14:02:00\",\n    \"title\": \"Secsafdsadfasdfond event\",\n    \"description\": \"it's a gooasdfasdfasdfd second event\",\n    \"canceled\": true,\n    \"guests\": []\n}"
+				},
+				"url": {
+					"raw": "localhost:9091/events/1",
+					"host": [
+						"localhost"
+					],
+					"port": "9091",
+					"path": [
+						"events",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "post invite guests",
 			"request": {
 				"method": "POST",
