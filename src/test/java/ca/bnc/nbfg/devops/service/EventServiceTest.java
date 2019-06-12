@@ -1,14 +1,9 @@
 package ca.bnc.nbfg.devops.service;
 
 import ca.bnc.nbfg.devops.model.Event;
-<<<<<<< HEAD
 import ca.bnc.nbfg.devops.repository.EventRepository;
 import org.assertj.core.api.Assertions;
 import ca.bnc.nbfg.devops.model.Guest;
-=======
-import ca.bnc.nbfg.devops.model.Guest;
-import ca.bnc.nbfg.devops.repository.EventRepository;
->>>>>>> 0c1286d2b0ca6fa8f0d3cf8cb78cc100e7e2d8c0
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -108,7 +103,6 @@ public class EventServiceTest {
     }
 
     @Test
-<<<<<<< HEAD
     public void cancelEvent_Success() {
         //setup
         Event event1 = new Event();
@@ -122,8 +116,6 @@ public class EventServiceTest {
 
         Assertions.assertThat( event1.isCanceled() ).isTrue();
     }
-=======
->>>>>>> 0c1286d2b0ca6fa8f0d3cf8cb78cc100e7e2d8c0
     public void inviteGuestsTest_Success(){
         //setup
         Event event = new Event();

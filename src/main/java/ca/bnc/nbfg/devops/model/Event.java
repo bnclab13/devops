@@ -17,10 +17,8 @@ public class Event {
     private LocalDateTime endDate;
     private String title;
     private String description;
-<<<<<<< HEAD
     private boolean canceled;
-=======
->>>>>>> 0c1286d2b0ca6fa8f0d3cf8cb78cc100e7e2d8c0
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Guest> guests = new ArrayList<>();
 

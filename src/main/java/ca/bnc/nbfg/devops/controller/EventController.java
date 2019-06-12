@@ -37,10 +37,4 @@ public class EventController {
         eventService.inviteGuests(id,guests);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
-    @PostMapping("/events/{id}/guests")
-    public ResponseEntity<String> inviteGuestToEvent(@PathVariable Long id, @RequestBody List<Guest> guests){
-        eventService.inviteGuests(id,guests);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
 }
