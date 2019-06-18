@@ -1,20 +1,16 @@
 package ca.bnc.nbfg.devops.service;
 
 import ca.bnc.nbfg.devops.model.Event;
+import ca.bnc.nbfg.devops.model.Guest;
 import ca.bnc.nbfg.devops.repository.EventRepository;
 import org.assertj.core.api.Assertions;
-import ca.bnc.nbfg.devops.model.Guest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.internal.matchers.Any;
 import org.springframework.test.context.junit4.SpringRunner;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
