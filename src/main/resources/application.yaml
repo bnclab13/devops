@@ -2,11 +2,18 @@ spring:
   profiles:
     active: dev
 
-security.basic.enabled: false
-management.security.enabled: false
-security.ignored: /**
+security:
+  basic:
+    enabled: false
+  ignored: /**
 
-server.port: 9090
+management:
+  security:
+    enabled: false
+
+server:
+  port: 9090
+
 ---
 
 spring:

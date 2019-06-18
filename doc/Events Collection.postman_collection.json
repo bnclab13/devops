@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4853251e-12bc-4cd4-9c4a-289e53eefccd",
+		"_postman_id": "ef55111c-4bee-4dc7-8437-4996c5e2081b",
 		"name": "Events develop",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -22,11 +22,10 @@
 					"raw": "{\n    \"startDate\": \"2019-06-03T12:02:00\",\n    \"endDate\": \"2019-06-03T14:02:00\",\n    \"title\": \"Second event\",\n    \"description\": \"it's a good second event\"\n}"
 				},
 				"url": {
-					"raw": "localhost:9091/events",
+					"raw": "{{url}}/events",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "9091",
 					"path": [
 						"events"
 					]
@@ -51,11 +50,10 @@
 					"raw": "{\n    \"startDate\": \"2019-06-03T12:02:00\",\n    \"endDate\": \"2019-06-03T14:02:00\",\n    \"title\": \"Secsafdsadfasdfond event\",\n    \"description\": \"it's a gooasdfasdfasdfd second event\",\n    \"canceled\": true,\n    \"guests\": []\n}"
 				},
 				"url": {
-					"raw": "localhost:9091/events/1",
+					"raw": "{{url}}/events/1",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "9091",
 					"path": [
 						"events",
 						"1"
@@ -81,11 +79,10 @@
 					"raw": "[\n{\n \"id\" : 1,\n \"lastName\" : \"guestLastName\",\n \"firstName\" : \"guestFirstName\",\n \"email\" : \"test@test.com\"\n}\n]"
 				},
 				"url": {
-					"raw": "localhost:9091/events/1/guests",
+					"raw": "{{url}}/events/1/guests",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "9091",
 					"path": [
 						"events",
 						"1",
@@ -112,11 +109,10 @@
 					"raw": "{\n    \"startDate\": \"2019-06-03T12:02:00\",\n    \"endDate\": \"2019-06-03T14:02:00\",\n    \"title\": \"Second event\",\n    \"description\": \"it's a good second event\"\n}"
 				},
 				"url": {
-					"raw": "localhost:9091/events/1/cancel",
+					"raw": "{{url}}/events/1/cancel",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "9091",
 					"path": [
 						"events",
 						"1",
@@ -132,11 +128,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:9091/events",
+					"raw": "{{url}}/events",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "9091",
 					"path": [
 						"events"
 					]
@@ -150,11 +145,10 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:9091/events/1",
+					"raw": "{{url}}/events/1",
 					"host": [
-						"localhost"
+						"{{url}}"
 					],
-					"port": "9091",
 					"path": [
 						"events",
 						"1"
