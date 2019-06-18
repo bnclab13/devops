@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Event {
@@ -76,5 +77,24 @@ public class Event {
 
     public void setCanceled(boolean canceled) {
         this.canceled = canceled;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return canceled == event.canceled &&
+                Objects.equals(id, event.id) &&
+                Objects.equals(startDate, event.startDate) &&
+                Objects.equals(endDate, event.endDate) &&
+                Objects.equals(title, event.title) &&
+                Objects.equals(description, event.description) &&
+                Objects.equals(guests, event.guests);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, startDate, endDate, title, description, canceled, guests);
     }
 }
