@@ -66,7 +66,8 @@ public class EventService {
         boolean isUpdated = false;
 
         Optional<Event> eventOptional = eventRepository.findById(id);
-        if (eventOptional.isPresent()) {
+        if (eventOptional.isPresent() &&
+                !eventOptional.get().isCanceled()) {
             event.setId(id);
             eventRepository.save(event);
             isUpdated = true;
