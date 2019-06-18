@@ -10,7 +10,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.internal.matchers.Any;
 import org.springframework.test.context.junit4.SpringRunner;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -222,4 +226,22 @@ public class EventServiceTest {
         Assertions.assertThat(result).isFalse();
     }
 
+    @Test
+    public void updateEvent_EventIsCancelled_ReturnFalse() {
+        // setup
+        final Long EVENT_ID = Long.valueOf(312);
+        Event eventMock = Mockito.mock(Event.class);
+        Optional<Event> optional = Optional.ofNullable(eventMock);
+
+        Mockito.when(eventMock.isCanceled()).thenReturn(true);
+        Mockito.when(eventRepositoryMock.findById(EVENT_ID)).thenReturn(optional);
+
+        // act
+        boolean result = eventService.updateEvent(EVENT_ID, eventMock);
+
+        // assert
+        Mockito.verify(eventRepositoryMock).findById(EVENT_ID);
+        Mockito.verifyNoMoreInteractions(eventRepositoryMock);
+        Assertions.assertThat(result).isFalse();
+    }
 }
