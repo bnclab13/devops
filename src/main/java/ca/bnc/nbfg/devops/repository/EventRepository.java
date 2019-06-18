@@ -13,4 +13,7 @@ import ca.bnc.nbfg.devops.model.Event;
 import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event,Long>{
+
+    @Query("SELECT e FROM Event e JOIN e.guests g WHERE g.email = :email")
+    public List<Event> getEventsByGuest(@Param("email") String email);
 }

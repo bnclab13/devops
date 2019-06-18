@@ -19,8 +19,14 @@ public class Event {
     private String description;
     private boolean canceled;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Guest> guests = new ArrayList<>();
+    @ManyToMany( cascade =
+            {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            }, fetch = FetchType.LAZY)
+    private List<Guest> guests;
 
     public List<Guest> getGuests() {
         return guests;

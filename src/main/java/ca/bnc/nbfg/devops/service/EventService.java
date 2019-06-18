@@ -61,4 +61,20 @@ public class EventService {
             }
         }
     }
+
+    public boolean updateEvent(Long id, Event event) {
+        boolean isUpdated = false;
+
+        Optional<Event> eventOptional = eventRepository.findById(id);
+        if (eventOptional.isPresent()) {
+            event.setId(id);
+            eventRepository.save(event);
+        }
+
+        return isUpdated;
+    }
+
+    public List<Event> getEventsByGuest(String email){
+       return eventRepository.getEventsByGuest(email);
+    }
 }
