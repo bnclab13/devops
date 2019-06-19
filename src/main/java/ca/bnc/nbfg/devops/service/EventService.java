@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -46,10 +47,13 @@ public class EventService {
         if (eventOptional.isPresent()){
             Event event = eventOptional.get();
             //add all the guests to the list
+
+            if(event.getGuests() == null) {
+                event.setGuests(new ArrayList<Guest>());
+            }
             event.getGuests().addAll(guests);
             eventRepository.save(event);
         }
-
     }
 
     public void deleteEvent(Long id) {
@@ -69,6 +73,7 @@ public class EventService {
         if (eventOptional.isPresent()) {
             event.setId(id);
             eventRepository.save(event);
+            isUpdated = true;
         }
 
         return isUpdated;
