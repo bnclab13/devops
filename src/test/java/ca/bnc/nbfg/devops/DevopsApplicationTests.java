@@ -59,7 +59,7 @@ public class DevopsApplicationTests {
         Event[] events =
                 given()
                         .when()
-                        .get("/events")
+                        .get(EVENTS_PATH)
                         .as(Event[].class);
 
         //assert
@@ -99,7 +99,7 @@ public class DevopsApplicationTests {
                 .when()
                 .delete(EVENTS_PATH + "/{id}")
                 .then()
-                .statusCode(200);
+                .statusCode(200).body(isEmptyOrNullString());
 
         given()
                 .when()
@@ -123,7 +123,7 @@ public class DevopsApplicationTests {
                 .when()
                 .delete(EVENTS_PATH + "/{id}")
                 .then()
-                .statusCode(200);
+                .statusCode(200).body(isEmptyOrNullString());
 
         given()
                 .when()
