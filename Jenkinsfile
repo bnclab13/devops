@@ -17,11 +17,17 @@ pipeline {
             }
         }
         stage('Build Image Docker'){
+            when {
+                branch 'develop'
+            }
             steps {
                 sh "sudo docker build -t event-manager ."
             }
         }
         stage('Deploy'){
+            when {
+                branch 'develop'
+            }
             steps {
                 script {
                   try {
