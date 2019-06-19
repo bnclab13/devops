@@ -1,5 +1,9 @@
 package ca.bnc.nbfg.devops.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,31 +15,38 @@ public class Event {
 
     @Id
     @GeneratedValue
-    private Long id;
+    @Column(name = "EVENT_ID")
+    private long id;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String title;
     private String description;
     private boolean canceled;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Guest> guests = new ArrayList<>();
+    /* @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.guest", cascade={CascadeType.MERGE,CascadeType.PERSIST})*/
+    //private List<Guest> guests = new ArrayList<>();
+
+
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event", cascade={CascadeType.MERGE,CascadeType.PERSIST})
+    @JsonIgnoreProperties("event")
+    private List<GuestInvitation> guestsInvitation = new ArrayList<>();
 
     public List<Guest> getGuests() {
-        return guests;
+        return new ArrayList<Guest>();
     }
 
     public void setGuests(List<Guest> guests) {
-        this.guests = guests;
+        //this.guests = guests;
     }
 
 
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -79,6 +90,14 @@ public class Event {
         this.canceled = canceled;
     }
 
+    public List<GuestInvitation> getGuestsInvitation() {
+        return guestsInvitation;
+    }
+
+    public void setGuestsInvitation(List<GuestInvitation> guestsInvitation) {
+        this.guestsInvitation = guestsInvitation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,12 +108,12 @@ public class Event {
                 Objects.equals(startDate, event.startDate) &&
                 Objects.equals(endDate, event.endDate) &&
                 Objects.equals(title, event.title) &&
-                Objects.equals(description, event.description) &&
-                Objects.equals(guests, event.guests);
+                Objects.equals(description, event.description) /*&&
+        Objects.equals(guests, event.guests)*/;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, startDate, endDate, title, description, canceled, guests);
+        return Objects.hash(id, startDate, endDate, title, description, canceled/*, guests*/);
     }
 }

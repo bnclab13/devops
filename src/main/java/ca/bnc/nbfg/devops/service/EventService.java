@@ -2,7 +2,9 @@ package ca.bnc.nbfg.devops.service;
 
 import ca.bnc.nbfg.devops.model.Event;
 import ca.bnc.nbfg.devops.model.Guest;
+import ca.bnc.nbfg.devops.model.GuestInvitation;
 import ca.bnc.nbfg.devops.repository.EventRepository;
+import ca.bnc.nbfg.devops.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,9 @@ public class EventService {
 
     @Autowired
     private EventRepository eventRepository ;
+
+    @Autowired
+    private GuestRepository guestRepository ;
 
     public Event createEvent(Event event)
     {
@@ -44,7 +49,22 @@ public class EventService {
         if (eventOptional.isPresent()){
             Event event = eventOptional.get();
             //add all the guests to the list
-            event.getGuests().addAll(guests);
+            //event.getGuests().addAll(guests);
+            for (Guest guest : guests){
+                Guest guestPersisted = null;
+                Optional<Guest> guestOptional = guestRepository.findById(guest.getId());
+                if (!guestOptional.isPresent()){
+                  guestPersisted = guestRepository.save(guest);
+                    guestRepository.flush();
+                }
+                else{
+                    guestPersisted = guestOptional.get();
+                }
+                GuestInvitation guestInvitation = new GuestInvitation(event,guestPersisted);
+                event.getGuestsInvitation().add(guestInvitation);
+                guestPersisted.getGuestsInvitation().add(guestInvitation);
+            }
+
             eventRepository.save(event);
         }
 

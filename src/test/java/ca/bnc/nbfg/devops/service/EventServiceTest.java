@@ -43,7 +43,7 @@ public class EventServiceTest {
         eventOutput = eventService.createEvent(eventInput);
 
         //assert
-        Assert.assertEquals(new Long(12345L),eventOutput.getId());
+        Assert.assertEquals(12345L,eventOutput.getId());
         Mockito.verify(eventRepositoryMock).save(eventInput);
         Mockito.verifyNoMoreInteractions(eventRepositoryMock);
     }
