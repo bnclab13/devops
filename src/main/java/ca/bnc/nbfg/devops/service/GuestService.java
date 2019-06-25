@@ -20,7 +20,7 @@ public class GuestService {
         if(guests.size() == 1){
             Guest guest = guests.get(0);
             return null;
-//            return guest.getEventGuestSet();
+//            return guest.getEventGuests();
         }
         else return null;
     }

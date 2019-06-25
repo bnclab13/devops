@@ -47,8 +47,8 @@ public class EventService {
         Optional<Event> eventOptional = eventRepository.findById(eventId);
         if (eventOptional.isPresent()){
             Event event = eventOptional.get();
-            List<Guest> guestToInvite = guestRepository.saveAll(guests);
-            event.addGuests(guestToInvite);
+            event.addGuests(guests);
+            guestRepository.saveAll(guests);
             eventRepository.save(event);
         }
     }

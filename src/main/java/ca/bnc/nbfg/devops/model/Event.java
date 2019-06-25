@@ -27,7 +27,7 @@ public class Event {
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<EventGuest> eventGuests;
+    private Set<EventGuest> eventGuests = new HashSet<>();
 
     public Event() {
     }
@@ -43,9 +43,7 @@ public class Event {
                 eventGuest.setEvent(this);
             }
             this.eventGuests = Stream.of(eventGuests).collect(Collectors.toSet());
-        } else {
-            this.eventGuests = new HashSet<>();
-        }
+        } 
     }
 
     public long getId() {

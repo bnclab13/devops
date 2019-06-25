@@ -20,7 +20,7 @@ public class Guest {
 
     @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<EventGuest> eventGuestSet = new HashSet<>();
+    private Set<EventGuest> eventGuests = new HashSet<>();
 
     public Guest() {
     }
@@ -63,12 +63,12 @@ public class Guest {
         this.email = email;
     }
 
-    public Set<EventGuest> getEventGuestSet() {
-        return eventGuestSet;
+    public Set<EventGuest> getEventGuests() {
+        return eventGuests;
     }
 
-    public void setEventGuestSet(Set<EventGuest> eventGuestSet) {
-        this.eventGuestSet = eventGuestSet;
+    public void setEventGuests(Set<EventGuest> eventGuests) {
+        this.eventGuests = eventGuests;
     }
 
     @Override
@@ -79,12 +79,11 @@ public class Guest {
         return id == guest.id &&
                 Objects.equals(lastName, guest.lastName) &&
                 Objects.equals(firstName, guest.firstName) &&
-                Objects.equals(email, guest.email) &&
-                Objects.equals(eventGuestSet, guest.eventGuestSet);
+                Objects.equals(email, guest.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, lastName, firstName, email, eventGuestSet);
+        return Objects.hash(id, lastName, firstName, email);
     }
 }
