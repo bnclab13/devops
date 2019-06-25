@@ -1,6 +1,8 @@
 package ca.bnc.nbfg.devops;
 
 import ca.bnc.nbfg.devops.model.Event;
+import ca.bnc.nbfg.devops.model.EventGuest;
+import ca.bnc.nbfg.devops.model.Guest;
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Before;
@@ -145,11 +147,8 @@ public class DevopsApplicationTests {
     }
 
     private Event buildEvent() {
-        Event event = new Event();
-        event.setDescription("description of event");
-        event.setStartDate(LocalDateTime.now());
-        event.setEndDate(LocalDateTime.now().plusDays(3));
-        return event;
+        Guest guest = new Guest("Wayne", "Bruce", "bruce.wayne@gmail.com");
+        return new Event(LocalDateTime.now(),LocalDateTime.now().plusDays(3),"title", "description of event", new EventGuest(guest));
     }
 
 }

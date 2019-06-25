@@ -1,46 +1,52 @@
 package ca.bnc.nbfg.devops.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 public class Event {
 
     @Id
     @GeneratedValue
-    @Column(name = "EVENT_ID")
     private long id;
+
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String title;
     private String description;
     private boolean canceled;
 
-    /* @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.guest", cascade={CascadeType.MERGE,CascadeType.PERSIST})*/
-    //private List<Guest> guests = new ArrayList<>();
 
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<EventGuest> eventGuests;
 
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event", cascade={CascadeType.MERGE,CascadeType.PERSIST})
-    @JsonIgnoreProperties("event")
-    private List<GuestInvitation> guestsInvitation = new ArrayList<>();
-
-    public List<Guest> getGuests() {
-        return new ArrayList<Guest>();
+    public Event() {
     }
 
-    public void setGuests(List<Guest> guests) {
-        //this.guests = guests;
+    public Event(LocalDateTime startDate, LocalDateTime endDate, String title, String description, EventGuest... eventGuests) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.title = title;
+        this.description = description;
+
+        if (eventGuests != null) {
+            for (EventGuest eventGuest : eventGuests) {
+                eventGuest.setEvent(this);
+            }
+            this.eventGuests = Stream.of(eventGuests).collect(Collectors.toSet());
+        } else {
+            this.eventGuests = new HashSet<>();
+        }
     }
-
-
 
     public long getId() {
         return id;
@@ -90,12 +96,20 @@ public class Event {
         this.canceled = canceled;
     }
 
-    public List<GuestInvitation> getGuestsInvitation() {
-        return guestsInvitation;
+    public void addGuests(List<Guest> guests) {
+        for (Guest g : guests) {
+            EventGuest evtG = new EventGuest(g);
+            evtG.setEvent(this);
+            this.eventGuests.add(evtG);
+        }
     }
 
-    public void setGuestsInvitation(List<GuestInvitation> guestsInvitation) {
-        this.guestsInvitation = guestsInvitation;
+    public Set<EventGuest> getEventGuests() {
+        return eventGuests;
+    }
+
+    public void setEventGuests(Set<EventGuest> eventGuests) {
+        this.eventGuests = eventGuests;
     }
 
     @Override
@@ -108,12 +122,11 @@ public class Event {
                 Objects.equals(startDate, event.startDate) &&
                 Objects.equals(endDate, event.endDate) &&
                 Objects.equals(title, event.title) &&
-                Objects.equals(description, event.description) /*&&
-        Objects.equals(guests, event.guests)*/;
+                Objects.equals(description, event.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, startDate, endDate, title, description, canceled/*, guests*/);
+        return Objects.hash(id, startDate, endDate, title, description, canceled);
     }
 }

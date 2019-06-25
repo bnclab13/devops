@@ -1,39 +1,34 @@
 package ca.bnc.nbfg.devops.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Guest {
 
     @Id
     @GeneratedValue
-    @Column(name = "GUEST_ID")
     private long id;
+
     private String lastName;
     private String firstName;
     private String email;
-    //@OneToMany(fetch = FetchType.LAZY, mappedBy = "guest")
-    //@JsonIgnore
-    //private List<Event> events;
 
+    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<EventGuest> eventGuestSet = new HashSet<>();
 
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "guest")
-    @JsonIgnoreProperties("guest")
-    private List<GuestInvitation> guestsInvitation = new ArrayList<>();
-
-    public List<Event> getEvents() {
-        return new ArrayList<Event>();
+    public Guest() {
     }
 
-    public void setEvents(List<Event> events) {
-        /*this.events = events;*/
+    public Guest(String lastName, String firstName, String email) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.email = email;
     }
 
     public long getId() {
@@ -67,13 +62,29 @@ public class Guest {
     public void setEmail(String email) {
         this.email = email;
     }
-    public List<GuestInvitation> getGuestsInvitation() {
-        return guestsInvitation;
+
+    public Set<EventGuest> getEventGuestSet() {
+        return eventGuestSet;
     }
 
-    public void setGuestsInvitation(List<GuestInvitation> guestsInvitation) {
-        this.guestsInvitation = guestsInvitation;
+    public void setEventGuestSet(Set<EventGuest> eventGuestSet) {
+        this.eventGuestSet = eventGuestSet;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Guest guest = (Guest) o;
+        return id == guest.id &&
+                Objects.equals(lastName, guest.lastName) &&
+                Objects.equals(firstName, guest.firstName) &&
+                Objects.equals(email, guest.email) &&
+                Objects.equals(eventGuestSet, guest.eventGuestSet);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, lastName, firstName, email, eventGuestSet);
+    }
 }
