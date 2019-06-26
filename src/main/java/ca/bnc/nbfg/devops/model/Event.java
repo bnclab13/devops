@@ -16,6 +16,7 @@ public class Event {
 
     @Id
     @GeneratedValue
+    @Column(name = "event_id")
     private long id;
 
     private LocalDateTime startDate;
@@ -25,8 +26,11 @@ public class Event {
     private boolean canceled;
 
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @OneToMany(
+            mappedBy = "event",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private Set<EventGuest> eventGuests = new HashSet<>();
 
     public Event() {
@@ -96,8 +100,7 @@ public class Event {
 
     public void addGuests(List<Guest> guests) {
         for (Guest g : guests) {
-            EventGuest evtG = new EventGuest(g);
-            evtG.setEvent(this);
+            EventGuest evtG = new EventGuest(g,this);
             this.eventGuests.add(evtG);
         }
     }

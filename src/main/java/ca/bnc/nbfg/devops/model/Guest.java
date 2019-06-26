@@ -18,7 +18,9 @@ public class Guest {
     private String firstName;
     private String email;
 
-    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL)
+    @OneToMany(
+            mappedBy = "guest",
+            orphanRemoval = true)
     @JsonIgnore
     private Set<EventGuest> eventGuests = new HashSet<>();
 

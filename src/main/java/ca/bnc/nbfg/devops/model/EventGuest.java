@@ -1,23 +1,25 @@
 package ca.bnc.nbfg.devops.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 public class EventGuest implements Serializable {
 
-    @Id
+    @EmbeddedId
+    @JsonIgnore
+    private EventGuestId id;
+
     @ManyToOne
-    @JoinColumn
+    @MapsId("eventId")
+    @JsonIgnore
     private Event event;
 
-    @Id
-    @ManyToOne
-    @JoinColumn
+    @ManyToOne(cascade = CascadeType.ALL)
+    @MapsId("guestId")
     private Guest guest;
 
     private boolean accepted;
@@ -27,6 +29,12 @@ public class EventGuest implements Serializable {
 
     public EventGuest(Guest guest) {
         this.guest = guest;
+    }
+
+    public EventGuest(Guest guest, Event event) {
+        this.guest = guest;
+        this.event = event;
+        this.id = new EventGuestId(event.getId(),guest.getId());
     }
 
     @Override

@@ -147,8 +147,7 @@ public class DevopsApplicationTests {
     }
 
     private Event buildEvent() {
-        Guest guest = new Guest("Wayne", "Bruce", "bruce.wayne@gmail.com");
-        return new Event(LocalDateTime.now(),LocalDateTime.now().plusDays(3),"title", "description of event", new EventGuest(guest));
+        return new Event(LocalDateTime.now(),LocalDateTime.now().plusDays(3),"title", "description of event");
     }
 
 }

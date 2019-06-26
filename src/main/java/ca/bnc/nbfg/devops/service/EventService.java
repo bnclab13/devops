@@ -45,10 +45,10 @@ public class EventService {
 
     public void inviteGuests(Long eventId, List<Guest> guests){
         Optional<Event> eventOptional = eventRepository.findById(eventId);
+
         if (eventOptional.isPresent()){
             Event event = eventOptional.get();
             event.addGuests(guests);
-            guestRepository.saveAll(guests);
             eventRepository.save(event);
         }
     }
