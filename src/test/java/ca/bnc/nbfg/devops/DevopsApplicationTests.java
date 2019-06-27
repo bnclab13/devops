@@ -134,6 +134,11 @@ public class DevopsApplicationTests {
                 .body("", hasSize(1));
     }
 
+    @Test
+    public void get_events_of_guest_by_email_success(){
+
+    }
+
     private Event postEvent() {
         Event event = buildEvent();
         return given()
