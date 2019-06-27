@@ -54,4 +54,9 @@ public class EventController {
 
         return response;
     }
+
+    @GetMapping("/events/{email}/guests")
+    public List<Event> getEventsByGuest(@PathVariable String email) {
+        return eventService.getEventsByGuest(email);
+    }
 }

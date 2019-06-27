@@ -1,6 +1,7 @@
 package ca.bnc.nbfg.devops.service;
 
 import ca.bnc.nbfg.devops.model.Event;
+import ca.bnc.nbfg.devops.model.EventGuest;
 import ca.bnc.nbfg.devops.model.Guest;
 import ca.bnc.nbfg.devops.repository.EventRepository;
 import org.assertj.core.api.Assertions;
@@ -32,9 +33,9 @@ public class EventServiceTest {
     @Test
     public void createEventTest_Success(){
         //setup
-        Event eventInput = new Event();
+        Event eventInput = buildEvent();
         eventInput.setDescription("description");
-        Event eventOutput = new Event();
+        Event eventOutput = buildEvent();
         eventOutput.setDescription("description");
         eventOutput.setId(12345L);
         Mockito.when(eventRepositoryMock.save(eventInput)).thenReturn(eventOutput);
@@ -43,7 +44,7 @@ public class EventServiceTest {
         eventOutput = eventService.createEvent(eventInput);
 
         //assert
-        Assert.assertEquals(new Long(12345L),eventOutput.getId());
+        Assert.assertEquals(12345L,eventOutput.getId());
         Mockito.verify(eventRepositoryMock).save(eventInput);
         Mockito.verifyNoMoreInteractions(eventRepositoryMock);
     }
@@ -51,13 +52,12 @@ public class EventServiceTest {
     @Test
     public void getAllEventTest_Success(){
         //setup
-        Event event1 = new Event();
+        Event event1 = buildEvent();
         event1.setId(1111L);
-        event1.setDescription("description");
-        Event event2 = new Event();
+        Event event2 = buildEvent();
         event2.setId(2222L);
         event2.setDescription("description2");
-        Event event3 = new Event();
+        Event event3 = buildEvent();
         event3.setId(3333L);
         event3.setDescription("description3");
         List<Event> events =Arrays.asList(event1,event2,event3);
@@ -76,15 +76,15 @@ public class EventServiceTest {
     @Test
     public void getSortedEventsTest_Success(){
         //setup
-        Event event1 = new Event();
+        Event event1 = buildEvent();
         event1.setId(1111L);
         event1.setStartDate(LocalDateTime.of(2019,10,13,10,10));
         event1.setDescription("description");
-        Event event2 = new Event();
+        Event event2 = buildEvent();
         event2.setId(2222L);
         event2.setStartDate(LocalDateTime.of(2019,9,10,10,10));
         event2.setDescription("description2");
-        Event event3 = new Event();
+        Event event3 = buildEvent();
         event3.setId(3333L);
         event3.setStartDate(LocalDateTime.of(2019,9,12,10,10));
         event3.setDescription("description3");
@@ -106,7 +106,7 @@ public class EventServiceTest {
     @Test
     public void cancelEvent_Success() {
         //setup
-        Event event1 = new Event();
+        Event event1 = buildEvent();
         event1.setId(4242L);
         event1.setDescription("description");
         event1.setCanceled(false);
@@ -119,12 +119,11 @@ public class EventServiceTest {
     }
     public void inviteGuestsTest_Success(){
         //setup
-        Event event = new Event();
+        Event event = buildEvent();
         event.setId(1111L);
         Optional<Event> eventOptional = Optional.of(event);
         List<Guest> guests = new ArrayList<>();
-        Guest guest = new Guest();
-        guest.setEmail("test@test.com");
+        Guest guest = buildGuest();
         guests.add(guest);
         Mockito.when(eventRepositoryMock.findById(1111L)).thenReturn(eventOptional);
 
@@ -132,7 +131,7 @@ public class EventServiceTest {
         eventService.inviteGuests(new Long(1111L),guests);
 
         //assert
-        assertThat(event.getGuests()).hasSize(1);
+        assertThat(event.getEventGuests()).hasSize(1);
         Mockito.verify(eventRepositoryMock).findById(1111L);
         Mockito.verify(eventRepositoryMock).save(event);
         Mockito.verifyNoMoreInteractions(eventRepositoryMock);
@@ -141,7 +140,7 @@ public class EventServiceTest {
     @Test
     public void deleteCanceledEventCanceled_Success() {
         //setup
-        Event event = new Event();
+        Event event = buildEvent();
         event.setId(4242L);
         event.setDescription("description");
         event.setCanceled(true);
@@ -159,7 +158,7 @@ public class EventServiceTest {
     @Test
     public void deleteCanceledEventNotCanceled_Success() {
         //setup
-        Event event = new Event();
+        Event event = buildEvent();
         event.setId(4242L);
         event.setDescription("description");
         event.setCanceled(false);
@@ -239,5 +238,13 @@ public class EventServiceTest {
         Mockito.verify(eventRepositoryMock).findById(EVENT_ID);
         Mockito.verifyNoMoreInteractions(eventRepositoryMock);
         Assertions.assertThat(result).isFalse();
+    }
+
+    private Event buildEvent() {
+        return new Event(LocalDateTime.now(),LocalDateTime.now().plusDays(3),"title", "description of event", new EventGuest(buildGuest()));
+    }
+
+    private Guest buildGuest() {
+        return new Guest("Wayne", "Bruce", "bruce.wayne@gmail.com");
     }
 }
