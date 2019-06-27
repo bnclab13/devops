@@ -30,13 +30,6 @@ pipeline {
                         "-Dsonar.java.binaries=/var/lib/jenkins/workspace/EventsManager_develop/target/classes"
 
                 }
-
-                timeout(time: 2, unit: 'MINUTES') {
-
-                    waitForQualityGate abortPipeline: true
-
-                }
-
             }
 
         }
