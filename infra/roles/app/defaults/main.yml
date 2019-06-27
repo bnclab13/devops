@@ -1,0 +1,6 @@
+---
+docker:
+  image_name: tutum/hello-world
+  instance_name: http-hello-world
+  port: 80
+  map_to_port: 50001

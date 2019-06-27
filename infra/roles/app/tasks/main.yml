@@ -1,0 +1,4 @@
+---
+- name: Run Docker image in container
+  become: yes
+  shell: "docker run --name {{ docker.instance_name }} -d -p {{ docker.map_to_port }}:{{ docker.port }} {{ docker.image_name }}"
