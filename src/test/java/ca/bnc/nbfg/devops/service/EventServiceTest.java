@@ -1,9 +1,9 @@
 package ca.bnc.nbfg.devops.service;
 
 import ca.bnc.nbfg.devops.model.Event;
+import ca.bnc.nbfg.devops.model.Guest;
 import ca.bnc.nbfg.devops.repository.EventRepository;
 import org.assertj.core.api.Assertions;
-import ca.bnc.nbfg.devops.model.Guest;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,13 +11,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringRunner;
-import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 public class EventServiceTest {
@@ -121,12 +122,11 @@ public class EventServiceTest {
         //setup
         Event event = new Event();
         event.setId(1111L);
+        Optional<Event> eventOptional = Optional.of(event);
         List<Guest> guests = new ArrayList<>();
         Guest guest = new Guest();
         guest.setEmail("test@test.com");
         guests.add(guest);
-        Optional<Event> eventOptional = Optional.of(event);
-        //eventOptional.get().setGuests(guests);
         Mockito.when(eventRepositoryMock.findById(1111L)).thenReturn(eventOptional);
 
         //test
@@ -222,4 +222,22 @@ public class EventServiceTest {
         Assertions.assertThat(result).isFalse();
     }
 
+    @Test
+    public void updateEvent_EventIsCancelled_ReturnFalse() {
+        // setup
+        final Long EVENT_ID = Long.valueOf(312);
+        Event eventMock = Mockito.mock(Event.class);
+        Optional<Event> optional = Optional.ofNullable(eventMock);
+
+        Mockito.when(eventMock.isCanceled()).thenReturn(true);
+        Mockito.when(eventRepositoryMock.findById(EVENT_ID)).thenReturn(optional);
+
+        // act
+        boolean result = eventService.updateEvent(EVENT_ID, eventMock);
+
+        // assert
+        Mockito.verify(eventRepositoryMock).findById(EVENT_ID);
+        Mockito.verifyNoMoreInteractions(eventRepositoryMock);
+        Assertions.assertThat(result).isFalse();
+    }
 }
