@@ -31,4 +31,9 @@ public class GuestController {
     public void declineGuestInvitation(@PathVariable long guestId,@PathVariable long eventId) {
         guestService.setInvitationStatus(guestId, eventId,EventGuest.InvitationStatus.DECLINED);
     }
+
+    @PutMapping("/guests/{guestId}/events/{eventId}/tentative")
+    public void tentativeGuestInvitation(@PathVariable long guestId,@PathVariable long eventId) {
+        guestService.setInvitationStatus(guestId, eventId,EventGuest.InvitationStatus.TENTATIVE);
+    }
 }

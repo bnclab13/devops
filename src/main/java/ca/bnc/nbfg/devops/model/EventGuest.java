@@ -91,6 +91,7 @@ public class EventGuest implements Serializable {
     public enum InvitationStatus {
         ACCEPTED,
         DECLINED,
+        TENTATIVE,
         NO_RESPONSE
     }
 
