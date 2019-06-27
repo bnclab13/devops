@@ -14,7 +14,31 @@ pipeline {
 
         }
 
+       stage('Sonarqube') {
 
+            environment {
+
+                scannerHome = tool 'scanner1'
+
+            }
+
+            steps {
+
+                withSonarQubeEnv('install1') {
+
+                    sh "${scannerHome}/bin/sonar-scanner"
+
+                }
+
+                timeout(time: 10, unit: 'MINUTES') {
+
+                    waitForQualityGate abortPipeline: true
+
+                }
+
+            }
+
+        }
 
         stage('Tests'){
 
@@ -38,34 +62,9 @@ pipeline {
 
         
 
-       stage('Sonarqube') {
 
-            environment {
 
-                scannerHome = tool 'scanner1'
-
-            }
-
-            steps {
-
-                withSonarQubeEnv('scanner1') {
-
-                    sh "${scannerHome}/bin/sonar-scanner"
-
-                }
-
-                timeout(time: 10, unit: 'MINUTES') {
-
-                    waitForQualityGate abortPipeline: true
-
-                }
-
-            }
-
-        }
-
-        
-
+     
         stage('Build Image Docker'){
 
             when {
