@@ -1,0 +1,38 @@
+---
+- name: Download jenkins.repo
+  become: yes
+  get_url:
+    url: http://pkg.jenkins-ci.org/redhat/jenkins.repo
+    dest: /etc/yum.repos.d/jenkins.repo
+- name: Import Jenkins Key
+  become: yes
+  rpm_key:
+    key: https://jenkins-ci.org/redhat/jenkins-ci.org.key
+- name: Install Jenkins
+  become: yes
+  package:
+    name: jenkins
+- name: Install Jenkins
+  become: yes
+  package:
+    name: jenkins
+- name: Switch off admin screen
+  become: yes
+  lineinfile:
+    path: /etc/sysconfig/jenkins
+    regexp: '^JENKINS_JAVA_OPTIONS='
+    line: 'JENKINS_JAVA_OPTIONS="-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"'
+- name: Start the service Jenkins
+  become: yes
+  service:
+    name: jenkins
+    state: started
+- name: Wait for Jenkins up
+  wait_for:
+    port: 8080
+#TODO : faire marcher le plugin jenkins_job pour automatiquement charger le job (installer les requirements du module)
+#- name: Configure job for Event Manager
+#  jenkins_job:
+#    config: "{{ lookup('file', 'templates/job_event_manager.xml') }}"
+#    name: Event Manager
+...
