@@ -1,0 +1,4 @@
+---
+- name: Ensure Docker is installed
+  import_role:
+    name: docker
