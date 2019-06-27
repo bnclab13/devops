@@ -4,10 +4,13 @@ import ca.bnc.nbfg.devops.model.Event;
 import ca.bnc.nbfg.devops.model.Guest;
 import ca.bnc.nbfg.devops.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -53,5 +56,15 @@ public class EventController {
         }
 
         return response;
+    }
+
+    @GetMapping("/events/{startDate}/{endDate}")
+    List<Event> getEventByPeriod(@PathVariable("startDate") @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss") LocalDateTime startDate, @PathVariable("endDate") @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss") LocalDateTime endDate){
+       return eventService.getEventByPeriod(startDate, endDate);
+    }
+
+    @GetMapping("/events/{email}/{startDate}/{endDate}")
+    List<Event> getMyEventsByPeriod(@PathVariable("email") String email, @PathVariable("startDate") @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss") LocalDateTime startDate, @PathVariable("endDate") @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss") LocalDateTime endDate){
+       return eventService.getMyEventsByPeriod(email, startDate, endDate);
     }
 }
