@@ -76,4 +76,8 @@ public class EventService {
 
         return isUpdated;
     }
+
+    public List<Event> getEventsByGuest(String email){
+        return eventRepository.getEventsByGuest(email);
+    }
 }
