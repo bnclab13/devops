@@ -4,6 +4,10 @@ pipeline {
         stage('Build Application'){
             steps {
                 sh "mvn clean compile"
+                def scannerHome = tool 'scanner1'
+                withSonarQubeEnv('SonarQube') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }                
             }
         }
 
@@ -18,19 +22,7 @@ pipeline {
             }
         }
         
-       stage('Sonarqube') {
-            environment {
-                scannerHome = tool 'scanner1'
-            }
-            steps {
-                withSonarQubeEnv('scanner1') {
-                    sh "${scannerHome}/bin/sonar-scanner"
-                }
-                timeout(time: 10, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
+   
         
         stage('Build Image Docker'){
             when {
