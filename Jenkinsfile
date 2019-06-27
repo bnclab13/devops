@@ -6,7 +6,19 @@ pipeline {
                 sh "mvn clean compile"
             }
         }
-        stage('Sonarqube') {
+
+        stage('Tests'){
+            steps {
+                sh "mvn test"
+            }
+        }
+        stage('Package'){
+            steps {
+                sh "mvn install -DskipTests"
+            }
+        }
+        
+       stage('Sonarqube') {
             environment {
                 scannerHome = tool 'scanner1'
             }
@@ -19,16 +31,7 @@ pipeline {
                 }
             }
         }
-        stage('Tests'){
-            steps {
-                sh "mvn test"
-            }
-        }
-        stage('Package'){
-            steps {
-                sh "mvn install -DskipTests"
-            }
-        }
+        
         stage('Build Image Docker'){
             when {
                 branch 'develop'
