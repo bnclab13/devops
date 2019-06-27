@@ -1,0 +1,5 @@
+- name: Java Install JDK8
+  package:
+    name: java-1.8.0-openjdk
+    state: present
+  become: true
