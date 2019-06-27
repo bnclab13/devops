@@ -26,7 +26,8 @@ pipeline {
 
                 withSonarQubeEnv('install1') {
 
-                    sh "${scannerHome}/bin/sonar-scanner"
+                    sh "${scannerHome}/bin/sonar-scanner " +
+                        "-Dsonar.java.binaries=/var/lib/jenkins/workspace/EventsManager_develop/target/classes"
 
                 }
 
