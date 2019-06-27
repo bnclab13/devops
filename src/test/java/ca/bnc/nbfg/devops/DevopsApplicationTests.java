@@ -4,6 +4,7 @@ import ca.bnc.nbfg.devops.model.Event;
 import ca.bnc.nbfg.devops.model.Guest;
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
+import org.hamcrest.Matcher;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -120,6 +122,7 @@ public class DevopsApplicationTests {
 
        //setup
         Event event = postEvent();
+        List<Event> eventResultList= new ArrayList<>();
     //    Event eventUpdated = inviteGuest(event.getId(), "test@test.com");
 
         //invite guest
@@ -133,8 +136,8 @@ public class DevopsApplicationTests {
                 .when()
                 .get(path)
                 .then()
-                .statusCode(200)
-                .body(isEmptyOrNullString());
+                .statusCode(200);
+                //.body(hasSize(0));
         //assert
         //Assert.assertEquals(listEvents.size() , 1);
         //Assert.assertEquals(listEvents.get(0).getGuests().get(0).getEmail(), event.getGuests().get(0).getEmail());
