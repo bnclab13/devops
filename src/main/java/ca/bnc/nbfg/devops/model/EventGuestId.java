@@ -38,4 +38,17 @@ public class EventGuestId implements Serializable {
         this.guestId=guestId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EventGuestId that = (EventGuestId) o;
+        return eventId == that.eventId &&
+                guestId == that.guestId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventId, guestId);
+    }
 }

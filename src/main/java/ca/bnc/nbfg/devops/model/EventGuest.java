@@ -22,7 +22,23 @@ public class EventGuest implements Serializable {
     @MapsId("guestId")
     private Guest guest;
 
-    private boolean accepted;
+    public EventGuestId getId() {
+        return id;
+    }
+
+    public void setId(EventGuestId id) {
+        this.id = id;
+    }
+
+    public InvitationStatus getInvitationStatus() {
+        return invitationStatus;
+    }
+
+    public void setInvitationStatus(InvitationStatus invitationStatus) {
+        this.invitationStatus = invitationStatus;
+    }
+
+    private InvitationStatus invitationStatus = InvitationStatus.NO_RESPONSE;
 
     public EventGuest() {
     }
@@ -37,20 +53,7 @@ public class EventGuest implements Serializable {
         this.id = new EventGuestId(event.getId(),guest.getId());
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EventGuest that = (EventGuest) o;
-        return accepted == that.accepted &&
-                Objects.equals(event, that.event) &&
-                Objects.equals(guest, that.guest);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(event, guest, accepted);
-    }
 
     public void setEvent(Event event) {
         this.event = event;
@@ -68,11 +71,27 @@ public class EventGuest implements Serializable {
         this.guest = guest;
     }
 
-    public boolean isAccepted() {
-        return accepted;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EventGuest that = (EventGuest) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(event, that.event) &&
+                Objects.equals(guest, that.guest) &&
+                invitationStatus == that.invitationStatus;
     }
 
-    public void setAccepted(boolean accepted) {
-        this.accepted = accepted;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, event, guest, invitationStatus);
     }
+
+
+    public enum InvitationStatus {
+        ACCEPTED,
+        DECLINED,
+        NO_RESPONSE
+    }
+
 }

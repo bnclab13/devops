@@ -25,6 +25,8 @@ import static org.hamcrest.Matchers.*;
 public class DevopsApplicationTests {
 
     private static final String EVENTS_PATH = "/events";
+    private static final String GUESTS_PATH = "/guests";
+
 
     @LocalServerPort
     private int port;
@@ -145,6 +147,7 @@ public class DevopsApplicationTests {
                 .post(EVENTS_PATH)
                 .as(Event.class);
     }
+
 
     private Event buildEvent() {
         return new Event(LocalDateTime.now(),LocalDateTime.now().plusDays(3),"title", "description of event");
