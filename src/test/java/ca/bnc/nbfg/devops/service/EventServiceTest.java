@@ -247,4 +247,5 @@ public class EventServiceTest {
     private Guest buildGuest() {
         return new Guest("Wayne", "Bruce", "bruce.wayne@gmail.com");
     }
+
 }
