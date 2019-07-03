@@ -3,8 +3,8 @@
   hosts: all
   vars:
     docker:
-      image_name: tutum/hello-world
-      instance_name: another-http-hello-world
+      image_name: labbnc13/event-manager:latest
+      instance_name: prod-event-manager
       port: 80
       map_to_port: 80
   become: yes
