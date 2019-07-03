@@ -19,8 +19,7 @@ public class Event {
     private boolean canceled;
 
     @ManyToMany( cascade =
-            {
-                    CascadeType.DETACH,
+            { CascadeType.DETACH,
                     CascadeType.MERGE,
                     CascadeType.REFRESH,
                     CascadeType.PERSIST
