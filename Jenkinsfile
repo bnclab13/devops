@@ -79,7 +79,6 @@ pipeline {
                          -Dsonar.java.binaries=/var/lib/jenkins/workspace/EventsManager_develop/target/classes \
                          -Dsonar.java.libraries=/var/lib/jenkins/workspace/EventsManager_develop/target/*.jar \
                          -Dsonar.java.test.binaries=/var/lib/jenkins/workspace/EventsManager_develop/target/test-classes \
-                         -Dsonar.java.test.libraries=/var/lib/jenkins/workspace/EventsManager_develop/target2/*.jar \
                          -Dsonar.junit.reportPaths=/var/lib/jenkins/workspace/EventsManager_develop/target/surefire-reports"
 
 
