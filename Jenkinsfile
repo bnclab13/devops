@@ -131,7 +131,7 @@ pipeline {
 
             // leave workspace clean after build
 
-             varchiveArtifacts 'target/*.jar'
+             archiveArtifacts 'target/*.jar'
 
             //junit 'target/surefire-reports/*.xml'
 
