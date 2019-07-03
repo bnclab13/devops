@@ -25,6 +25,16 @@ public class Event {
     private String description;
     private boolean canceled;
 
+/*<<<<<<< HEAD
+    @ManyToMany( cascade =
+            { CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            },fetch = FetchType.LAZY)
+    private List<Guest> guests = new ArrayList<>();
+=======
+>>>>>>> 7ba7dc4dad90e460d4e5b8b49897f2363af44766*/
 
     @OneToMany(
             mappedBy = "event",
