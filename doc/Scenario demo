@@ -50,16 +50,16 @@ scenario postman:
 ]
 
 - Get Event By Email
-- Tentative invitation
+- Tentative invitation (Id de guest incrementation)
 - Get Event by period
 
 2019-06-02T12:00:00/2019-06-04T12:00:00
 
-- accept invitation
+- accept invitation (Id de guest et Id event)
 - Get Events
 - decline invitation
 - Get Events
-- cancel event1
+- cancel event1 (Id Event)
 - Get Events
 - Delete Event1
 - Get Events
