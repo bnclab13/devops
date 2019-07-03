@@ -119,7 +119,7 @@ pipeline {
 
             //archiveArtifacts 'target/*.jar'
 
-            //junit 'target/surefire-reports/*.xml'
+            junit 'target/surefire-reports/*.xml'
 
             //cleanWs()
 
