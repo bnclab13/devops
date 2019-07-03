@@ -1,0 +1,6 @@
+- name: Install apache-maven
+  package:
+    name: maven
+    state: present
+  become: true
+
