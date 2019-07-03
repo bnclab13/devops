@@ -117,11 +117,11 @@ pipeline {
 
             // leave workspace clean after build
 
-            //archiveArtifacts 'target/*.jar'
+            archiveArtifacts 'target/*.jar'
 
             junit 'target/surefire-reports/*.xml'
 
-            //cleanWs()
+            cleanWs()
 
         }
 
