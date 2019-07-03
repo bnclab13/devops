@@ -20,7 +20,7 @@ pipeline {
 
             steps {
 
-                sh "mvn test"
+                sh "mvn test sonar:sonar"
 
             }
 
@@ -133,9 +133,9 @@ pipeline {
 
              archiveArtifacts 'target/*.jar'
 
-            //junit 'target/surefire-reports/*.xml'
+            junit 'target/surefire-reports/*.xml'
 
-            // cleanWs()
+            cleanWs()
 
         }
 
