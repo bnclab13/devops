@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2789faf5-76d8-4a62-a4ab-9ff421c7a95c",
+		"_postman_id": "ebddc2a9-02d5-46af-8e39-14025c8c4974",
 		"name": "Events develop",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -267,6 +267,45 @@
 					"path": [
 						"events",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get events by period",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/events/2019-06-02T12:02:00/2019-06-04T12:02:00",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"events",
+						"2019-06-02T12:02:00",
+						"2019-06-04T12:02:00"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get my events by period",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/events/test2@test.com/2019-06-02T12:02:00/2019-06-04T12:02:00",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"events",
+						"test2@test.com",
+						"2019-06-02T12:02:00",
+						"2019-06-04T12:02:00"
 					]
 				}
 			},
