@@ -15,7 +15,6 @@ pipeline {
         }
 
 
-
         stage('Tests'){
 
             steps {
@@ -38,11 +37,7 @@ pipeline {
 
         }
 
-        
 
-
-
-     
         stage('Build Image Docker'){
 
             when {
@@ -61,33 +56,23 @@ pipeline {
 
         
      stage('Sonarqube') {
-
             environment {
-
                 scannerHome = tool 'scanner1'
-
             }
-
             steps {
-
                 withSonarQubeEnv('install1') {
 
                     sh "${scannerHome}/bin/sonar-scanner " +
-                        "-Dsonar.log.level=debug \
-                         -Dsonar.sources=src/main/java/ca/bnc/nbfg/devops \
+                        "-Dsonar.sources=src/main/java/ca/bnc/nbfg/devops \
                          -Dsonar.tests=src/test/java/ca/bnc/nbfg/devops \
                          -Dsonar.java.binaries=target/classes \
                          -Dsonar.java.libraries=target/*.jar \
                          -Dsonar.java.test.binaries=target/test-classes \
                          -Dsonar.junit.reportPaths=target/surefire-reports"
-
-
                 }
             }
-
         }
-        
-        
+	
         stage('Push Dockerhub and Deploy'){
 
             when {
