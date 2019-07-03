@@ -72,7 +72,14 @@ public class EventService {
         if (eventOptional.isPresent() &&
                 !eventOptional.get().isCanceled()) {
             event.setId(id);
-            eventRepository.save(event);
+
+            Event e = eventOptional.get();
+            e.setStartDate(event.getStartDate());
+            e.setEndDate(event.getEndDate());
+            e.setTitle(event.getTitle());
+            e.setDescription(event.getDescription());
+
+            eventRepository.save(e);
             isUpdated = true;
         }
 
