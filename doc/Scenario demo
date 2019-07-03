@@ -1,0 +1,66 @@
+DevOps Demonstration :
+
+1) montrer notre presentation
+
+2) Demo de pipeline Jenkins avec AWS
+
+
+scenario postman:
+
+- Create Event1
+
+{
+    "startDate": "2019-06-03T12:00:00",
+    "endDate": "2019-06-03T14:00:00",
+    "title": "First event",
+    "description": "it's a good First event"
+}
+
+
+- Create Event2
+
+{
+    "startDate": "2019-06-04T14:00:00",
+    "endDate": "2019-06-04T15:00:00",
+    "title": "Second event",
+    "description": "it's a good second event"
+}
+
+
+- Get Events
+- Update Event1
+
+{
+    "startDate": "2019-06-03T13:00:00",
+    "endDate": "2019-06-03T14:30:00",
+    "title": "First event updated",
+    "description": "it's a good First event updated"
+}
+
+
+- Get Events
+- Invite Guest Event1
+
+[
+{
+ "lastName" : "guestLastName",
+ "firstName" : "guestFirstName",
+ "email" : "test@test.com"
+}
+]
+
+- Get Event By Email
+- Tentative invitation
+- Get Event by period
+
+2019-06-02T12:00:00/2019-06-04T12:00:00
+
+- accept invitation
+- Get Events
+- decline invitation
+- Get Events
+- cancel event1
+- Get Events
+- Delete Event1
+- Get Events
+
