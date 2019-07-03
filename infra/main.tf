@@ -10,7 +10,7 @@ variable "authorized_key" {
   type = "map"
   default = {
     public = "./keys/infra_key.pub"
-    private = "/keys/infra_key"
+    private = "./keys/infra_key"
   }
 }
 
@@ -79,7 +79,7 @@ resource "aws_route_table_association" "public_route_assoc_b" {
 }
 
 resource "aws_key_pair" "edgenda_key" {
-  key_name   = "ec2_instance_key_13011"
+  key_name   = "ec2_instance_key_lab13demo"
   public_key = "${file(var.authorized_key.public)}"
 }
 
@@ -139,7 +139,7 @@ resource "aws_instance" "webservers" {
 
   tags = "${var.tags}"
 
-  subnet_id = "${aws_subnet.subnet_a.id}"
+  subnet_id = "${count.index % 2 == 0 ? aws_subnet.subnet_a.id : aws_subnet.subnet_b.id}"
   associate_public_ip_address = "true"
 
   vpc_security_group_ids = [

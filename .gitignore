@@ -11,6 +11,10 @@ HELP.md
 .springBeans
 .sts4-cache
 
+tfplan
+.terraform
+terraform.tfstate
+terraform.tfstate.backup
 ### IntelliJ IDEA ###
 .idea
 *.iws
