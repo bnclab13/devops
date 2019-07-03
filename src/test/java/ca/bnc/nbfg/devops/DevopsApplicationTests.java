@@ -3,20 +3,27 @@ package ca.bnc.nbfg.devops;
 import ca.bnc.nbfg.devops.model.Event;
 import ca.bnc.nbfg.devops.model.EventGuest;
 import ca.bnc.nbfg.devops.model.Guest;
+import ca.bnc.nbfg.devops.repository.EventRepository;
+import ca.bnc.nbfg.devops.service.EventService;
 import io.restassured.RestAssured;
+import io.restassured.internal.http.URIBuilder;
 import io.restassured.specification.RequestSpecification;
+import org.apache.http.Header;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.net.Socket;
+import java.net.URI;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,6 +37,8 @@ public class DevopsApplicationTests {
     private static final String EVENTS_PATH = "/events";
     private static final String GUESTS_PATH = "/guests";
 
+    private static final LocalDateTime FROM_DATE = LocalDateTime.now().minusDays(1);
+    private static final LocalDateTime TO_DATE = LocalDateTime.now().plusDays(2);
 
     @LocalServerPort
     private int port;
@@ -141,6 +150,31 @@ public class DevopsApplicationTests {
                 .body("", hasSize(1));
     }
 
+    @Test
+    public void getEventsByPeriod() {
+        Event event = postEvent();
+        RequestSpecification requestSpecification =
+                given().pathParam("fromDate", "2019-07-02T12:02:00").pathParam("toDate", "2019-07-04T12:02:00");
+
+        requestSpecification.contentType("application/json" + "/" + FROM_DATE + "/" + TO_DATE).then().statusCode(200).and().body(notNullValue());
+    }
+
+    @Test
+    public void getMyEventsByPeriod() {
+        Event event = postEvent();
+        Guest guest = new Guest();
+        guest.setEmail("test@test.com");
+        guest.setFirstName("toto");
+        guest.setLastName("tata");
+        inviteGuest(event ,guest);
+
+        RequestSpecification requestSpecification =
+                given().pathParam("email" , "test@test.com").pathParam("fromDate", "2019-07-02T12:02:00").pathParam("toDate", "2019-07-04T12:02:00");
+
+        requestSpecification.when().get(EVENTS_PATH + "/{email}/{fromDate}/{toDate}").then().statusCode(200).body(notNullValue());
+
+    }
+
     private Event postEvent() {
         Event event = buildEvent();
         return given()
@@ -156,4 +190,14 @@ public class DevopsApplicationTests {
         return new Event(LocalDateTime.now(),LocalDateTime.now().plusDays(3),"title", "description of event");
     }
 
+    private void inviteGuest(Event event, Guest guest) {
+        Long id = event.getId();
+        List<Guest> guestList = Arrays.asList(guest);
+
+        RequestSpecification requestSpecification =
+                given().contentType("application/json").pathParam("id" ,event.getId()).body(guestList);
+
+        requestSpecification.when().post( EVENTS_PATH + "/{id}/guests");
+
+    }
 }
