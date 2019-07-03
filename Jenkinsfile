@@ -24,9 +24,7 @@ pipeline {
             }
 
         }
-
-
-        
+     
         stage('Package'){
 
             steps {
