@@ -73,7 +73,15 @@ pipeline {
                 withSonarQubeEnv('install1') {
 
                     sh "${scannerHome}/bin/sonar-scanner " +
-                        "-Dsonar.log.level=debug -Dsonar.sources=/var/lib/jenkins/workspace/EventsManager_develop/src/main/java/ca/bnc/nbfg/devops -Dsonar.tests=/var/lib/jenkins/workspace/EventsManager_develop/src/test/java/ca/bnc/nbfg/devops -Dsonar.java.binaries=/var/lib/jenkins/workspace/EventsManager_develop/target/classes -Dsonar.junit.reportPaths=/var/lib/jenkins/workspace/EventsManager_develop/target/surefire-reports -Dsonar.java.libraries=/var/lib/jenkins/workspace/EventsManager_develop/target/*.jar"
+                        "-Dsonar.log.level=debug \
+                         -Dsonar.sources=/var/lib/jenkins/workspace/EventsManager_develop/src/main/java/ca/bnc/nbfg/devops \
+                         -Dsonar.tests=/var/lib/jenkins/workspace/EventsManager_develop/src/test/java/ca/bnc/nbfg/devop \
+                         -Dsonar.java.binaries=/var/lib/jenkins/workspace/EventsManager_develop/target/classes \
+                         -Dsonar.java.libraries=/var/lib/jenkins/workspace/EventsManager_develop/target/*.jar \
+                         -Dsonar.java.test.binaries=/var/lib/jenkins/workspace/EventsManager_develop/target2/classes \
+                         -Dsonar.java.test.libraries=/var/lib/jenkins/workspace/EventsManager_develop/target2/*.jar \
+                         -Dsonar.junit.reportPaths=/var/lib/jenkins/workspace/EventsManager_develop/target/surefire-reports"
+
 
                 }
             }
