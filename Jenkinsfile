@@ -88,7 +88,7 @@ pipeline {
         }
         
         
-        stage('Deploy'){
+        stage('Push Dockerhub and Deploy'){
 
             when {
 
@@ -110,9 +110,9 @@ pipeline {
 
                   }
 
-                  sh "docker login --username=lab13bnc --password=edgendalab13 --email=manel.boulares.24@gmail.com"
+                  sh "sudo docker login --username=lab13bnc --password=edgendalab13 --email=manel.boulares.24@gmail.com"
 				  sh "sudo docker tag EventManagerAPI bnclab13/event-manager:latest"
-                  sh "docker push bnclab13/event-manager:latest"
+                  sh "sudo docker push bnclab13/event-manager:latest"
                   sh "sudo docker run --name EventManagerAPI -p 50001:9090 -d event-manager"
 
                 }
