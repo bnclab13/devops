@@ -2,38 +2,42 @@ package ca.bnc.nbfg.devops.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import java.util.List;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Guest {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
+
     private String lastName;
     private String firstName;
     private String email;
-    @ManyToMany(mappedBy = "guests")
+
+    @OneToMany(
+            mappedBy = "guest",
+            orphanRemoval = true)
     @JsonIgnore
-    private List<Event> events;
+    private Set<EventGuest> eventGuests = new HashSet<>();
 
-    public List<Event> getEvents() {
-        return events;
+    public Guest() {
     }
 
-    public void setEvents(List<Event> events) {
-        this.events = events;
+    public Guest(String lastName, String firstName, String email) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.email = email;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -61,6 +65,27 @@ public class Guest {
         this.email = email;
     }
 
+    public Set<EventGuest> getEventGuests() {
+        return eventGuests;
+    }
 
+    public void setEventGuests(Set<EventGuest> eventGuests) {
+        this.eventGuests = eventGuests;
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Guest guest = (Guest) o;
+        return id == guest.id &&
+                Objects.equals(lastName, guest.lastName) &&
+                Objects.equals(firstName, guest.firstName) &&
+                Objects.equals(email, guest.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, lastName, firstName, email);
+    }
 }

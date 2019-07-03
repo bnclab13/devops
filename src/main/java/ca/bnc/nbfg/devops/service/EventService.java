@@ -3,6 +3,7 @@ package ca.bnc.nbfg.devops.service;
 import ca.bnc.nbfg.devops.model.Event;
 import ca.bnc.nbfg.devops.model.Guest;
 import ca.bnc.nbfg.devops.repository.EventRepository;
+import ca.bnc.nbfg.devops.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class EventService {
 
     @Autowired
     private EventRepository eventRepository ;
+
+    @Autowired
+    private GuestRepository guestRepository ;
 
     public Event createEvent(Event event)
     {
@@ -43,13 +47,12 @@ public class EventService {
 
     public void inviteGuests(Long eventId, List<Guest> guests){
         Optional<Event> eventOptional = eventRepository.findById(eventId);
+
         if (eventOptional.isPresent()){
             Event event = eventOptional.get();
-            //add all the guests to the list
-            event.getGuests().addAll(guests);
+            event.addGuests(guests);
             eventRepository.save(event);
         }
-
     }
 
     public void deleteEvent(Long id) {
@@ -76,11 +79,17 @@ public class EventService {
         return isUpdated;
     }
 
+
     public List<Event> getEventByPeriod(LocalDateTime fromDate, LocalDateTime toDate){
       return eventRepository.getEventByPeriod(fromDate, toDate);
     }
 
     public List<Event> getMyEventsByPeriod(String email, LocalDateTime startDate, LocalDateTime endDate) {
-       return eventRepository.getMyEventsByPeriod(email, startDate, endDate);
+        return eventRepository.getMyEventsByPeriod(email, startDate, endDate);
+    }
+
+    public List<Event> getEventsByGuest(String email){
+        return eventRepository.getEventsByGuest(email);
+
     }
 }

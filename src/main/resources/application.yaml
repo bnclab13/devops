@@ -18,6 +18,11 @@ server:
 
 spring:
   profiles: dev
+  jpa:
+    hibernate:
+      ddl-auto: create
+    generate-ddl: true
+    show-sql: true
 datasource:
   driver: org.h2.Driver
   url: jdbc:h2:mem:devopsdb
@@ -28,6 +33,13 @@ datasource:
 
 spring:
   profiles: prod
-
-
-
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace

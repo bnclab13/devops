@@ -1,12 +1,12 @@
 {
 	"info": {
-		"_postman_id": "ef55111c-4bee-4dc7-8437-4996c5e2081b",
+		"_postman_id": "2789faf5-76d8-4a62-a4ab-9ff421c7a95c",
 		"name": "Events develop",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "post event",
+			"name": "create event",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -63,7 +63,103 @@
 			"response": []
 		},
 		{
-			"name": "post invite guests",
+			"name": "accept invitation",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/guests/2/events/1/accept",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"guests",
+						"2",
+						"events",
+						"1",
+						"accept"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "tentative invitation",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/guests/2/events/1/tentative",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"guests",
+						"2",
+						"events",
+						"1",
+						"tentative"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "decline invitation",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/guests/2/events/1/decline",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"guests",
+						"2",
+						"events",
+						"1",
+						"decline"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "invite guests",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -76,7 +172,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[\n{\n \"id\" : 1,\n \"lastName\" : \"guestLastName\",\n \"firstName\" : \"guestFirstName\",\n \"email\" : \"test@test.com\"\n}\n]"
+					"raw": "[\n{\n \"lastName\" : \"guestLastName2\",\n \"firstName\" : \"guestFirstName2\",\n \"email\" : \"test2@test.com\"\n}\n]"
 				},
 				"url": {
 					"raw": "{{url}}/events/1/guests",
@@ -134,6 +230,25 @@
 					],
 					"path": [
 						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get events by email",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/events/test@test.com/guests",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"events",
+						"test@test.com",
+						"guests"
 					]
 				}
 			},

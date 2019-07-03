@@ -1,23 +1,31 @@
 package ca.bnc.nbfg.devops.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 public class Event {
 
     @Id
     @GeneratedValue
-    private Long id;
+    @Column(name = "event_id")
+    private long id;
+
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private String title;
     private String description;
     private boolean canceled;
 
+/*<<<<<<< HEAD
     @ManyToMany( cascade =
             { CascadeType.DETACH,
                     CascadeType.MERGE,
@@ -25,22 +33,38 @@ public class Event {
                     CascadeType.PERSIST
             },fetch = FetchType.LAZY)
     private List<Guest> guests = new ArrayList<>();
+=======
+>>>>>>> 7ba7dc4dad90e460d4e5b8b49897f2363af44766*/
 
-    public List<Guest> getGuests() {
-        return guests;
+    @OneToMany(
+            mappedBy = "event",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<EventGuest> eventGuests = new HashSet<>();
+
+    public Event() {
     }
 
-    public void setGuests(List<Guest> guests) {
-        this.guests = guests;
+    public Event(LocalDateTime startDate, LocalDateTime endDate, String title, String description, EventGuest... eventGuests) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.title = title;
+        this.description = description;
+
+        if (eventGuests != null) {
+            for (EventGuest eventGuest : eventGuests) {
+                eventGuest.setEvent(this);
+            }
+            this.eventGuests = Stream.of(eventGuests).collect(Collectors.toSet());
+        } 
     }
 
-
-
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -84,6 +108,21 @@ public class Event {
         this.canceled = canceled;
     }
 
+    public void addGuests(List<Guest> guests) {
+        for (Guest g : guests) {
+            EventGuest evtG = new EventGuest(g,this);
+            this.eventGuests.add(evtG);
+        }
+    }
+
+    public Set<EventGuest> getEventGuests() {
+        return eventGuests;
+    }
+
+    public void setEventGuests(Set<EventGuest> eventGuests) {
+        this.eventGuests = eventGuests;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -94,12 +133,11 @@ public class Event {
                 Objects.equals(startDate, event.startDate) &&
                 Objects.equals(endDate, event.endDate) &&
                 Objects.equals(title, event.title) &&
-                Objects.equals(description, event.description) &&
-                Objects.equals(guests, event.guests);
+                Objects.equals(description, event.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, startDate, endDate, title, description, canceled, guests);
+        return Objects.hash(id, startDate, endDate, title, description, canceled);
     }
 }

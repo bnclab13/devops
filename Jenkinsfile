@@ -14,7 +14,25 @@ pipeline {
 
         }
 
+       stage('Sonarqube') {
 
+            environment {
+
+                scannerHome = tool 'scanner1'
+
+            }
+
+            steps {
+
+                withSonarQubeEnv('install1') {
+
+                    sh "${scannerHome}/bin/sonar-scanner " +
+                        "-Dsonar.java.binaries=/var/lib/jenkins/workspace/EventsManager_develop/target/classes"
+
+                }
+            }
+
+        }
 
         stage('Tests'){
 
@@ -38,34 +56,9 @@ pipeline {
 
         
 
-       stage('Sonarqube') {
 
-            environment {
 
-                scannerHome = tool 'scanner1'
-
-            }
-
-            steps {
-
-                withSonarQubeEnv('scanner1') {
-
-                    sh "${scannerHome}/bin/sonar-scanner"
-
-                }
-
-                timeout(time: 10, unit: 'MINUTES') {
-
-                    waitForQualityGate abortPipeline: true
-
-                }
-
-            }
-
-        }
-
-        
-
+     
         stage('Build Image Docker'){
 
             when {

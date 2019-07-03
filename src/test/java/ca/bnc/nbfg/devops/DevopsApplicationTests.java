@@ -1,6 +1,8 @@
 package ca.bnc.nbfg.devops;
 
 import ca.bnc.nbfg.devops.model.Event;
+import ca.bnc.nbfg.devops.model.EventGuest;
+import ca.bnc.nbfg.devops.model.Guest;
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Before;
@@ -12,6 +14,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,6 +28,8 @@ import static org.hamcrest.Matchers.*;
 public class DevopsApplicationTests {
 
     private static final String EVENTS_PATH = "/events";
+    private static final String GUESTS_PATH = "/guests";
+
 
     @LocalServerPort
     private int port;
@@ -144,12 +151,9 @@ public class DevopsApplicationTests {
                 .as(Event.class);
     }
 
+
     private Event buildEvent() {
-        Event event = new Event();
-        event.setDescription("description of event");
-        event.setStartDate(LocalDateTime.now());
-        event.setEndDate(LocalDateTime.now().plusDays(3));
-        return event;
+        return new Event(LocalDateTime.now(),LocalDateTime.now().plusDays(3),"title", "description of event");
     }
 
 }

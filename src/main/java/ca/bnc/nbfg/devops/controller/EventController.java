@@ -64,7 +64,11 @@ public class EventController {
     }
 
     @GetMapping("/events/{email}/{startDate}/{endDate}")
-    List<Event> getMyEventsByPeriod(@PathVariable("email") String email, @PathVariable("startDate") @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss") LocalDateTime startDate, @PathVariable("endDate") @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss") LocalDateTime endDate){
-       return eventService.getMyEventsByPeriod(email, startDate, endDate);
+    List<Event> getMyEventsByPeriod(@PathVariable("email") String email, @PathVariable("startDate") @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss") LocalDateTime startDate, @PathVariable("endDate") @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss") LocalDateTime endDate) {
+        return eventService.getMyEventsByPeriod(email, startDate, endDate);
+    }
+    @GetMapping("/events/{email}/guests")
+    public List<Event> getEventsByGuest(@PathVariable String email) {
+        return eventService.getEventsByGuest(email);
     }
 }
