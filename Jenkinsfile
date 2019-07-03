@@ -39,7 +39,7 @@ pipeline {
                 withSonarQubeEnv('install1') {
 
                     sh "${scannerHome}/bin/sonar-scanner " +
-                        "-Dsonar.java.binaries=/var/lib/jenkins/workspace/EventsManager_develop/target/classes -Dsonar.junit.reportPaths=/var/lib/jenkins/workspace/EventsManager_develop/target/surefire-reports -Dsonar.libraries=/var/lib/jenkins/workspace/EventsManager_develop/target/EventManager.jar"
+                        "-Dsonar.java.binaries=/var/lib/jenkins/workspace/EventsManager_develop/target/classes -Dsonar.junit.reportPaths=/var/lib/jenkins/workspace/EventsManager_develop/target/surefire-reports -Dsonar.java.libraries=/var/lib/jenkins/workspace/EventsManager_develop/target/EventManager.jar"
 
                 }
             }
