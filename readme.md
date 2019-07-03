@@ -13,4 +13,4 @@ http://localhost:8080/Events/{id}/guests                           METHODE : POS
 http://localhost:8080/Events?StartDate=XXX&EndDate=YYYY            METHODE : GET
 
 #### Jenkins: ####
-    http://labbnc13vm6.canadacentral.cloudapp.azure.com:8080 (user : admin password : admin) 
+    http://labbnc13vm6.canadacentral.cloudapp.azure.com:8080 (user : admin password : admin)
