@@ -20,7 +20,7 @@ pipeline {
 
             steps {
 
-                sh "mvn test sonar:sonar"
+                sh "mvn test"
 
             }
 
